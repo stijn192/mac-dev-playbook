@@ -9,8 +9,15 @@
     - include_vars: "{{ item }}"
       with_fileglob:
         - "{{ playbook_dir }}/config.yml"
-      tags: ['always']
-
+      tags: ['always'] 
+      
+  vars_prompt:
+    - name: "apple_id"
+      prompt: "Apple ID"
+    - name: "apple_pass"
+      prompt: "Apple Password"
+      private: yes
+  
   roles:
     - role: geerlingguy.homebrew
       tags: ['homebrew']

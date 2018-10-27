@@ -1,0 +1,40 @@
+---
+  - name: Ansible find PyCharm Directory
+    find:
+      paths: ~/Library/Application Support/
+      patterns: "PyCharmCE*"
+      file_type: directory
+    register: pycharm_matched
+  - name: Ansible find PHPStorm Directory
+    find:
+      paths: ~/Library/Application Support/
+      patterns: "PhpStorm*"
+      file_type: directory
+    register: phpstorm_matched
+  - name: Download material theme
+    get_url:
+      url: https://plugins.jetbrains.com/files/8006/51453/Material_Theme-2.9.6.zip
+      dest: "{{downloads}}"
+      mode: 0440
+  - name: ensure tomcat directory exists
+    file:
+      path: "{{item}}/Material Theme"
+      state: directory
+    with_items: "{{pycharm_matched}}"
+  - name: ensure tomcat directory exists
+    file:
+      path: "{{item}}/Material Theme"
+      state: directory
+    with_items: "{{phpstorm_matched}}"        
+  - name: Install Material Theme for PyCharm
+    unarchive:
+      src: "{{downloads}}/Material_Theme-2.9.6.zip"
+      dest: "{{item}}/Material Theme"
+      creates: "{{item}}/Material Theme/lib"
+    with_items: "{{pycharm_matched}}"
+  - name: Install Material Theme for PHPStorm
+    unarchive:
+      src: "{{downloads}}/Material_Theme-2.9.6.zip"
+      dest: "{{item}}/Material Theme"
+      creates: "{{item}}/Material Theme/lib"
+    with_items: "{{phpstorm_matched}}"
