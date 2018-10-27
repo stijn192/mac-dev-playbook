@@ -31,6 +31,9 @@
   tasks:
     - include_tasks: tasks/ansible-setup.yml
 
+    - include_tasks: tasks/hosts.yml
+      when: configure_hosts
+
     - include_tasks: tasks/sudoers.yml
       when: configure_sudoers
 
