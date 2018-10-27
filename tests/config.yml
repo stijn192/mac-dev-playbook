@@ -1,3 +1,5 @@
+configure_pyenv: yes
+
 homebrew_installed_packages:
   - autoconf
   - bash-completion
@@ -20,3 +22,5 @@ hosts_localhosts:
     - { ip: 127.0.0.1, name: "test"}
 
 post_provision_tasks: ["tasks/pycharm.yml"]
+
+pyenv_python_versions: ["3.7.0"]
