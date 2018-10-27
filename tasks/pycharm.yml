@@ -1,42 +1,88 @@
----
-  - name: Ansible find PyCharm Directory
+--- 
+  - name: Find PyCharm CE cask versions
     find:
-      paths: ~/Library/Application Support/
-      patterns: "PyCharmCE*"
-      file_type: directory
-    register: pycharm_matched
+        paths: /usr/local/Caskroom/pycharm-ce/
+        file_type: directory
+    register: pycharm_versions
+  - name: Find PhpStorm cask versions
+    find:
+        paths: /usr/local/Caskroom/phpstorm/
+        file_type: directory
+    register: phpstorm_versions
+  - name: Register PyCharm Major.Minor
+    set_fact: 
+        pycharm_mm: |
+           {%- if pycharm_mm is not defined -%}
+           {%-   set tmp_my_list=[ ] -%}
+           {%- else -%}
+           {%-   set tmp_my_list=pycharm_mm -%}
+           {%- endif -%}
+           {%- set dummy=tmp_my_list.append(item.path | regex_search('([0-9]{4}\.[0-9]{1,4})(?=\.[0-9]+)')) -%}
+           {{ tmp_my_list }}
+    with_items: "{{pycharm_versions.files}}"
+  - name: Register PhpStorm Major.Minor
+    set_fact: 
+        phpstorm_mm: |
+           {%- if phpstorm_mm is not defined -%}
+           {%-   set tmp_my_list=[ ] -%}
+           {%- else -%}
+           {%-   set tmp_my_list=phpstorm_mm -%}
+           {%- endif -%}
+           {%- set dummy=tmp_my_list.append(item.path | regex_search('([0-9]{4}\.[0-9]{1,4})(?=\.[0-9]+)')) -%}
+           {{ tmp_my_list }}
+    with_items: "{{phpstorm_versions.files}}"
   - name: Ansible find PHPStorm Directory
-    find:
-      paths: ~/Library/Application Support/
-      patterns: "PhpStorm*"
-      file_type: directory
-    register: phpstorm_matched
+    file:
+      path: "~/Library/Application Support/PhpStorm{{item}}"
+      state: directory
+    with_items: "{{phpstorm_mm}}"
+    when: "phpstorm_mm is defined"
+    register: phpstorm_dirs
+  - name: Ansible find PyCharm Directory
+    file:
+      path: "~/Library/Application Support/PyCharmCE{{item}}"
+      state: directory
+    with_items: "{{pycharm_mm}}"     
+    when: "pycharm_mm is defined"
+    register: pycharm_dirs       
   - name: Download material theme
     get_url:
       url: https://plugins.jetbrains.com/files/8006/51453/Material_Theme-2.9.6.zip
       dest: "{{downloads}}"
       mode: 0440
-  - debug: 
-      msg: "{{phpstorm_matched.files}}"
-  - name: ensure tomcat directory exists
+  - name: ensure Material Theme directory exists
     file:
       path: "{{item.path}}/Material Theme"
       state: directory
-    with_items: "{{pycharm_matched.files}}"
-  - name: ensure tomcat directory exists
+    with_items: 
+        - "{{pycharm_dirs.results}}"
+    when: "pycharm_mm.results is defined"
+  - debug:
+      msg: "{{pycharm_dirs.results}}"
+    when: "pycharm_dirs.results is defined"
+    
+  - name: ensure Material Theme directory exists
     file:
       path: "{{item.path}}/Material Theme"
       state: directory
-    with_items: "{{phpstorm_matched.files}}"        
+    with_items: 
+        - "{{phpstorm_dirs.results}}"
+    when: "phpstorm_dirs.results is defined"
+    
+  - name: Install Material Theme for PyCharm
+    unarchive:
+      src: "{{downloads}}/Material_Theme-2.9.6.zip"
+      dest: "{{item.path}}/Material Theme"
+      creates: "{item.path}/Material Theme/lib"
+    with_items: 
+        - "{{pycharm_dirs.results}}"
+    when: "pycharm_dirs.results is defined"
+    
   - name: Install Material Theme for PyCharm
     unarchive:
       src: "{{downloads}}/Material_Theme-2.9.6.zip"
       dest: "{{item.path}}/Material Theme"
       creates: "{{item.path}}/Material Theme/lib"
-    with_items: "{{pycharm_matched.files}}"
-  - name: Install Material Theme for PHPStorm
-    unarchive:
-      src: "{{downloads}}/Material_Theme-2.9.6.zip"
-      dest: "{{item.path}}/Material Theme"
-      creates: "{{item.path}}/Material Theme/lib"
-    with_items: "{{phpstorm_matched.files}}"
+    with_items: 
+        - "{{phpstorm_dirs.results}}"
+    when: "phpstorm_dirs.results is defined"
