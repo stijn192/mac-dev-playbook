@@ -50,16 +50,15 @@
       url: https://plugins.jetbrains.com/files/8006/51453/Material_Theme-2.9.6.zip
       dest: "{{downloads}}"
       mode: 0440
+      
   - name: ensure Material Theme directory exists
     file:
-      path: "{{item.path}}/Material Theme"
+          path: "{{item.path}}/Material Theme"
       state: directory
     with_items: 
         - "{{pycharm_dirs.results}}"
-    when: "pycharm_mm.results is defined"
-  - debug:
-      msg: "{{pycharm_dirs.results}}"
     when: "pycharm_dirs.results is defined"
+    
     
   - name: ensure Material Theme directory exists
     file:
