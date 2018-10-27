@@ -16,4 +16,7 @@ homebrew_cask_apps:
   - macvim
   - pycharm-ce
 
+hosts_localhosts:
+    - { ip: 127.0.0.1, name: "test"}
+
 post_provision_tasks: ["tasks/pycharm.yml"]

@@ -2,6 +2,7 @@
 downloads: ~/.ansible-downloads/
 
 configure_dotfiles: no
+configure_hosts: yes
 configure_sudoers: yes
 configure_terminal: yes
 configure_osx: yes
@@ -76,6 +77,11 @@ homebrew_cask_apps:
   - transmit
   - vagrant
 
+hosts_localhosts:
+    - { ip: 10.103.0.72, name: "srv-bru-wfmap"}
+    - { ip: 10.103.0.74, name: "srv-bru-wfmsql"}
+    - { ip: 10.103.0.21, name: "srv-bru-wfmap"}
+    
 # See `geerlingguy.mas` role documentation for usage instructions.
 mas_installed_apps: 
     - { id: 443987910, name: "1Password" }

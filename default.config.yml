@@ -2,6 +2,7 @@
 downloads: ~/.ansible-downloads/
 
 configure_dotfiles: yes
+configure_hosts: yes
 configure_sudoers: yes
 configure_terminal: yes
 configure_osx: yes
@@ -65,6 +66,8 @@ homebrew_cask_apps:
   - sublime-text
   - transmit
   - vagrant
+
+hosts_localhosts: []
 
 # See `geerlingguy.mas` role documentation for usage instructions.
 mas_installed_apps: []
