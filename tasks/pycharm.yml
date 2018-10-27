@@ -58,8 +58,7 @@
     with_items: 
         - "{{pycharm_dirs.results}}"
     when: "pycharm_dirs.results is defined"
-    
-    
+
   - name: ensure Material Theme directory exists
     file:
       path: "{{item.path}}/Material Theme"
