@@ -49,7 +49,6 @@
     get_url:
       url: https://plugins.jetbrains.com/files/8006/51453/Material_Theme-2.9.6.zip
       dest: "{{downloads}}"
-      mode: 0440
       
   - name: ensure Material Theme directory exists
     file:
