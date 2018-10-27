@@ -1,5 +1,3 @@
-configure_hosts: yes
-
 homebrew_installed_packages:
   - autoconf
   - bash-completion

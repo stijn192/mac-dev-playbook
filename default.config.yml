@@ -1,11 +1,12 @@
 ---
 downloads: ~/.ansible-downloads/
 
-configure_dotfiles: yes
+configure_dotfiles: no
 configure_hosts: yes
 configure_sudoers: yes
 configure_terminal: yes
 configure_osx: yes
+configure_pyenv: no
 
 dotfiles_repo: https://github.com/geerlingguy/dotfiles.git
 dotfiles_repo_accept_hostkey: yes
@@ -98,3 +99,5 @@ pip_packages: []
 
 # Glob pattern to ansible task files to run after all other tasks are finished.
 post_provision_tasks: []
+
+pyenv_python_versions: []

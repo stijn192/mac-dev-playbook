@@ -27,6 +27,9 @@
     - role: geerlingguy.mas
       when: mas_installed_apps
       tags: ['mas']
+    - role: avanov.pyenv
+      when: configure_pyenv
+      tags: ['pyenv']
 
   tasks:
     - include_tasks: tasks/ansible-setup.yml

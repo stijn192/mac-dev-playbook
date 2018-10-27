@@ -6,6 +6,7 @@ configure_hosts: yes
 configure_sudoers: yes
 configure_terminal: yes
 configure_osx: yes
+configure_pyenv: yes
 
 dotfiles_repo: https://github.com/geerlingguy/dotfiles.git
 dotfiles_repo_accept_hostkey: yes
@@ -39,7 +40,6 @@ homebrew_installed_packages:
   - nvm
   - parquet-tools
   - php
-  - pyenv
   - python
   - ssh-copy-id
   - cowsay
@@ -125,3 +125,6 @@ pip_packages:
 
 # Glob pattern to ansible task files to run after all other tasks are finished.
 post_provision_tasks: ["tasks/pycharm.yml"]
+
+pyenv_python_versions: ["2.7.15", "3.5.5", "3.6.6", "3.7.0"]
+
