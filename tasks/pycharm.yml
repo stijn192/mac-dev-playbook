@@ -53,7 +53,7 @@
       
   - name: ensure Material Theme directory exists
     file:
-          path: "{{item.path}}/Material Theme"
+      path: "{{item.path}}/Material Theme"
       state: directory
     with_items: 
         - "{{pycharm_dirs.results}}"
