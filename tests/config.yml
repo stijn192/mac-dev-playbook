@@ -14,3 +14,6 @@ homebrew_cask_apps:
   - firefox
   - limechat
   - macvim
+  - pycharm-ce
+
+post_provision_tasks: ["tasks/pycharm.yml"]
