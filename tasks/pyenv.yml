@@ -1,6 +1,6 @@
 ---
 - name: Filter already installed python versions
-  shell: pyenv whence 2to3
+  shell: pyenv whence 2to3 || true
   register: pyenv_installed_versions
   
 - name: Install Python interpreters "{{ pyenv_python_versions }}"
