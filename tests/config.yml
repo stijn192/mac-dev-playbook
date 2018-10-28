@@ -24,4 +24,4 @@ hosts_localhosts:
 
 post_provision_tasks: ["tasks/pycharm.yml"]
 
-pyenv_python_versions: ["3.7.0"]
+pyenv_python_versions: ["2.7.15", "3.7.0"]

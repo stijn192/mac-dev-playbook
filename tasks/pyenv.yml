@@ -1,4 +1,8 @@
 ---
+- name: Filter already installed python versions
+  shell: pyenv whence 2to3
+  register: pyenv_installed_versions
+  
 - name: Install Python interpreters "{{ pyenv_python_versions }}"
-  shell: pyenv install --force {{ item }}
-  with_items: "{{ pyenv_python_versions }}"
+  shell: pyenv install {{ item }}
+  with_items: "{{ pyenv_python_versions | difference(pyenv_installed_versions.stdout_lines)}}"
