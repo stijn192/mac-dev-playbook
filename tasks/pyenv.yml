@@ -1,0 +1,4 @@
+---
+- name: Install Python interpreters "{{ pyenv_python_versions }}"
+  shell: pyenv install {{ item }}
+  with_items: "{{ pyenv_python_versions }}"
