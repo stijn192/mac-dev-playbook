@@ -9,6 +9,7 @@ homebrew_installed_packages:
   - cowsay
   - readline
   - pv
+  - pyenv
   - wget
   - wrk
 
